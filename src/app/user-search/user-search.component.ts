@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { User } from '../shared/user.model';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-user-search',
@@ -9,15 +9,16 @@ import { User } from '../shared/user.model';
   styleUrls: ['./user-search.component.less']
 })
 export class UserSearchComponent implements OnInit {
-  users: Observable<User[]>;
-  private searchTerms = new Subject<string>();
-  constructor() { }
+  users: User[] = [];
+  searchText: string;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.getUsers().subscribe((users: User[]) => this.users = users);
   }
 
-  search(term: string): void {
-    this.searchTerms.next(term);
+  updateSearchFilter(term: string) {
+    this.searchText = term;
   }
-
 }

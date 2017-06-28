@@ -1,4 +1,14 @@
 <div class="user-search">
-  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" placeholder="type a name..."/>
-  <user-list></user-list>
+  <input #searchBox id="search-box"
+      (keyup)="updateSearchFilter(searchBox.value)"
+      class="form-control"
+      placeholder="Search..."
+  />
+  <ul class="user-list list-group">
+    <app-user-item
+      *ngFor="let user of (users | searchUsers:searchText)"
+      [user]=user
+    >
+    </app-user-item>
+  </ul>
 </div>
