@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+
 import { User } from '../shared/user.model';
 import { UserService } from '../shared/user.service';
 
@@ -9,16 +11,24 @@ import { UserService } from '../shared/user.service';
   styleUrls: ['./user-search.component.less']
 })
 export class UserSearchComponent implements OnInit {
-  users: User[] = [];
+  users: Observable<User[]>;
   searchText: string;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((users: User[]) => this.users = users);
+    this.users = this.userService.getUsers();
   }
 
   updateSearchFilter(term: string) {
     this.searchText = term;
+  }
+
+  goToDetail(user: User): void {
+    const url = user.id.toString();
+    this.router.navigateByUrl(url);
   }
 }

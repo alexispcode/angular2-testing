@@ -4,10 +4,10 @@ import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  let component:    AppComponent;
+  let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let debug:      DebugElement;
-  let element:      HTMLElement;
+  let debug: DebugElement;
+  let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,4 +41,10 @@ describe('AppComponent', () => {
   it('should render <app-user-search/>', () => {
     expect(element.innerHTML).toContain('app-user-search');
   });
+
+  describe('when user is selected', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
+  })
 });

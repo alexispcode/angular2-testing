@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -8,16 +9,21 @@ import { UserService } from './shared/user.service';
 import { UserItemComponent } from './user-item/user-item.component';
 import { SearchUsersPipe } from './shared/search-user.pipe';
 
+import { AppRoutingModule, routedComponents } from './app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     UserSearchComponent,
     UserItemComponent,
-    SearchUsersPipe
+    SearchUsersPipe,
+    routedComponents
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

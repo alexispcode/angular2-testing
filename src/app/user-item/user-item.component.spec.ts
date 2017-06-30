@@ -3,7 +3,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { UserItemComponent } from './user-item.component';
-import { usersMock } from '../shared/user.mock';
+import { firstUserMock } from '../shared/user.mock';
 import { User } from '../shared/user.model';
 
 describe('UserItemComponent', () => {
@@ -11,13 +11,12 @@ describe('UserItemComponent', () => {
   let fixture: ComponentFixture<UserItemComponent>;
   let debug: DebugElement;
   let element: HTMLElement;
-  let expectedUser: User;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserItemComponent ]
+      declarations: [UserItemComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -26,13 +25,12 @@ describe('UserItemComponent', () => {
     debug = fixture.debugElement.query(By.css('.list-group-item'));
     element = debug.nativeElement;
 
-    expectedUser = usersMock[0];
-    component.user = expectedUser;
-    fixture.detectChanges();
+    component.user = firstUserMock;
+    fixture.detectChanges(); // trigger inital binding
   });
 
   it('should display users name', () => {
-    expect(element.textContent).toContain(expectedUser.name);
+    expect(element.textContent).toContain(firstUserMock.name);
   });
 
   /** FUNCTIONAL */
@@ -41,7 +39,7 @@ describe('UserItemComponent', () => {
     component.selected.subscribe((user: User) => selectedUser = user);
 
     debug.triggerEventHandler('click', null);
-    expect(selectedUser).toBe(expectedUser);
+    expect(selectedUser).toBe(firstUserMock);
   });
 
   it('should raise deleted when clicked', () => {
@@ -50,6 +48,6 @@ describe('UserItemComponent', () => {
 
     const deleteButton = fixture.debugElement.query(By.css('.delete-button'));
     deleteButton.triggerEventHandler('click', null);
-    expect(deletedUser).toBe(expectedUser);
+    expect(deletedUser).toBe(firstUserMock);
   });
 });

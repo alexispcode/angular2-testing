@@ -1,14 +1,20 @@
 <div class="user-search">
+
   <input #searchBox id="search-box"
       (keyup)="updateSearchFilter(searchBox.value)"
       class="form-control"
       placeholder="Search..."
   />
+
   <ul class="user-list list-group">
     <app-user-item
-      *ngFor="let user of (users | searchUsers:searchText)"
+      *ngFor="let user of (users | async | searchUsers:searchText)"
       [user]=user
-    >
+      (selected)="goToDetail($event)">
     </app-user-item>
+
+    <li class="list-group-item">
+      <button class="btn btn-default">Add new User</button>
+    </li>
   </ul>
 </div>
