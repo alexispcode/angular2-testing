@@ -1,0 +1,7 @@
+<form #noteForm="ngForm" class="form-inline">
+  <div class="form-group">
+    <input type="text"  class="form-control" required
+      [(ngModel)]="note" name="note" placeholder="User note">
+    <button type="button" (click)="saveNote()" class="btn btn-success" [disabled]="!noteForm.dirty || noteForm.invalid">Save</button>
+  </div>
+</form>

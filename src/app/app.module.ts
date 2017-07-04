@@ -10,6 +10,8 @@ import { UserItemComponent } from './user-item/user-item.component';
 import { SearchUsersPipe } from './shared/search-user.pipe';
 
 import { AppRoutingModule, routedComponents } from './app-routing.module';
+import { UserNotesComponent } from './user-notes/user-notes.component';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { AppRoutingModule, routedComponents } from './app-routing.module';
     UserSearchComponent,
     UserItemComponent,
     SearchUsersPipe,
-    routedComponents
+    routedComponents,
+    UserNotesComponent
   ],
   imports: [
     BrowserModule,
