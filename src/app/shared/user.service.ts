@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import { Note } from '../shared/note.model';
 import { User } from '../shared/user.model';
 
 @Injectable()
@@ -36,12 +37,13 @@ export class UserService {
       .map((response: Response) => response.json())
   }
 
-  saveNote(userid: number, note: string): void {
-    localStorage.setItem(userid.toString(), note);
+  saveNote(note: Note): void {
+    localStorage.setItem(note.user_id.toString(), note.text);
   }
 
-  getNote(userid: number): string {
-    const localNote = localStorage.getItem(userid.toString());
-    return localNote;
+  getNote(userid: number): Promise<Note> {
+    const text = localStorage.getItem(userid.toString());
+    const foundNote = new Note(userid, text);
+    return Promise.resolve(foundNote);
   }
 }

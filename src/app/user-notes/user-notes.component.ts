@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 
 import { UserService } from '../shared/user.service';
+import { Note } from '../shared/note.model';
 
 @Component({
   selector: 'app-user-notes',
@@ -9,27 +10,22 @@ import { UserService } from '../shared/user.service';
   styleUrls: ['./user-notes.component.less']
 })
 export class UserNotesComponent implements OnInit {
-  private note: string;
-  private userId: number;
+  @Input() note: Note;
   constructor(
     private userService: UserService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(param => this.onChangeIdParam(param));
   }
 
-  saveNote() {
-    this.userService.saveNote(this.userId, this.note);
+  saveNote(): void {
+    this.userService.saveNote(this.note);
   }
 
   private onChangeIdParam(param): void {
-    this.userId = Number((param.has('id') && param.get('id')));
-    this.note = this.userService.getNote(this.userId);
-  }
-
-  private reset(): void {
-    this.note = '';
+    const userID = Number((param.has('id') && param.get('id')));
+    this.userService.getNote(userID).then(note => this.note = note);
   }
 }

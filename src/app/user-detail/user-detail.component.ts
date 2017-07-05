@@ -57,7 +57,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   discard(): void {
-    this.user = this.userBackup;
+    this.user = Object.assign({}, this.userBackup);
     this.isEditing = false;
   }
 }
