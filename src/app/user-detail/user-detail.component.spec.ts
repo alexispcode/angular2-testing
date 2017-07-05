@@ -53,6 +53,39 @@ describe('UserDetailComponent', () => {
     it('should call getHero on init', () => {
       expect(page.spyUserServiceGetUser).toHaveBeenCalledTimes(1);
     });
+
+    it('input elements should be disabled on init', () => {
+      expect(page.inputUsername.disabled).toBeTruthy();
+      expect(page.inputEmail.disabled).toBeTruthy();
+    });
+
+    it('edit button should make inputs available for type in', fakeAsync(() => {
+      page.editButton.dispatchEvent(new Event('click'));
+      fixture.detectChanges();
+      tick();
+      expect(page.inputUsername.disabled).toBeFalsy();
+      expect(page.inputEmail.disabled).toBeFalsy();
+    }));
+
+    describe('when is editing...', () => {
+      beforeEach(fakeAsync(() => {
+        page.editButton.dispatchEvent(new Event('click'));
+        fixture.detectChanges();
+        tick();
+      }));
+
+      it('edit button should make inputs available for type in', () => {
+        expect(page.inputUsername.disabled).toBeFalsy();
+        expect(page.inputEmail.disabled).toBeFalsy();
+
+      })
+
+      it('save button should be enabled', () => {
+        console.log(page.saveButton.className)
+      });
+
+    })
+
   })
 });
 
@@ -80,6 +113,9 @@ class Page {
   inputUsername: HTMLInputElement;
   inputEmail: HTMLInputElement;
 
+  editButton: HTMLButtonElement;
+  saveButton: HTMLButtonElement;
+
   constructor() {
     const router = TestBed.get(Router);
     const userService = fixture.debugElement.injector.get(UserService);
@@ -91,10 +127,11 @@ class Page {
   addPageElements() {
     if (component.user) {
       // have user so these elements are in the DOM
-      // this.formInputs = fixture.debugElement.queryAll(By.css('form input.editable')).map(e => e.nativeElement);
-      this.userFullnameDisplay = fixture.debugElement.query(By.css('.user-fullname')).nativeElement;
-      // this.inputUsername = fixture.debugElement.query(By.css('#user-username')).nativeElement;
-      // this.inputEmail = fixture.debugElement.query(By.css('#user-email')).nativeElement;
+      this.userFullnameDisplay = fixture.debugElement.query(By.css('.display-userFullname')).nativeElement;
+      this.inputUsername = fixture.debugElement.query(By.css('#inputUsername')).nativeElement;
+      this.inputEmail = fixture.debugElement.query(By.css('#inputUserEmail')).nativeElement;
+      this.editButton = fixture.debugElement.query(By.css('.btn-edit')).nativeElement;
+      this.saveButton = fixture.debugElement.query(By.css('.btn-save')).nativeElement;
     }
   }
 }

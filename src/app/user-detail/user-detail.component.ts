@@ -24,7 +24,7 @@ import {
 export class UserDetailComponent implements OnInit {
   @Input() user: User;
   private userBackup: User;
-  private isEditing = false;
+  isEditing = false;
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
